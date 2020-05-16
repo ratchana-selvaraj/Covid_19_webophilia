@@ -13,7 +13,7 @@ def corona_dist():
 	mdu_c.head()
 	return mdu_c
 mdu_c=corona_dist()
-corona_count = Corona_Sate()
+corona_count = Corona_State()
 from flask import Flask,render_template,request
 import sys
 app=Flask(__name__)
