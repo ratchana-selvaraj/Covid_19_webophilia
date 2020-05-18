@@ -69,9 +69,7 @@ def corona_dist():
 	mdu_c=mdu.groupby('District').sum()[['Confirmed','Recovered','Active']]
 	mdu_c.head()
 	return mdu_c
-mdu_c=corona_dist()
 pair1=[(District,Confirmed,Recovered,Active) for District,Confirmed,Recovered,Active in zip(mdu_c.index,mdu_c['Confirmed'],mdu_c['Recovered'],mdu_c['Active'])]
-corona_count = Corona_State()
 pair2=[(State,Delta_Confirmed,Delta_Deaths,Delta_Recovered) for State,Delta_Confirmed,Delta_Deaths,Delta_Recovered in zip(corona_count.index,corona_count['Delta_Confirmed'],corona_count['Delta_Deaths'],corona_count['Delta_Recovered'])]
 
 #Chatbot for mental support
@@ -90,6 +88,6 @@ pair2=[(State,Delta_Confirmed,Delta_Deaths,Delta_Recovered) for State,Delta_Conf
 def home():
 	mdu_c=corona_dist()
 	corona_count = Corona_State()
-    return render_template('corona.html',table= mdu_c,)
+    return render_template('corona.html',table= mdu_c,map=corona_count,pair1=pair1,pair2=pair2)
 if __name__ == '__main__':
     app.run(debug=True)
