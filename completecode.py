@@ -19,6 +19,7 @@ import json
 import tflearn
 app=Flask(__name__)
 db=MySQLdb.connect("localhost","root","Goodluck","pm")
+#-------CHATBOT SECTION-------#
 #class to create dictionary that stores the dates and tweets
 class my_dictionary(dict): 
     # __init__ function 
@@ -101,7 +102,8 @@ def get_bot_response():
 			return(str(random.choice(responses))) 
 			quit()
 		else:
-			return(str(random.choice(responses))) 
+			return(str(random.choice(responses)))
+#-------TWEETS SCRAPING SECTION-------#			
 @app.route('/tweet_scrap',methods=['POST','GET'])
 #function to scrap tweets
 def tweet_scrap():
@@ -115,6 +117,7 @@ def tweet_scrap():
 		if(result[0]=='en'):
 			dict_obj_eng1.add(str(tweets.date),tweets.text)#adding only English tweets to dictionary with date as key
 	return render_template("tweets.html",dict_obj_eng1=dict_obj_eng1)
+#-------DONATION FORM SECTION-------#
 @app.route("/index")
 def index():
 	return render_template("form.html")
@@ -150,6 +153,7 @@ def checkout(phone):
 @app.route("/Thankyou",methods=["GET","POST"])
 def thankyou():
     return render_template("Thankyou.html")
+#-------LIVE TRACKER SECTION-------#
 def Corona_State():
 	coronadf=pd.read_csv('https://api.covid19india.org/csv/latest/state_wise.csv')
 	coronadf.head()
