@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Purple Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../node_modules/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css">
+  <!-- endinject -->
+  <!-- plugin css for this page -->
+  <link rel="stylesheet" href="../../node_modules/icheck/skins/all.css" />
+  <link rel="stylesheet" href="../../node_modules/select2/dist/css/select2.min.css" />
+  <link rel="stylesheet" href="../../node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css" />
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../css/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <h3 style="color:#6C3483;">Covid-19</h3>
+		</div>
+      <div class="navbar-menu-wrapper d-flex align-items-stretch">
+        <div class="search-field ml-4 d-none d-md-block">
+          <form class="d-flex align-items-stretch h-100" action="#">
+            <div class="input-group">
+              <input type="text" class="form-control bg-transparent border-0" placeholder="Search">
+              <div class="input-group-btn">
+                <button type="button" class="btn bg-transparent dropdown-toggle px-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="mdi mdi-earth"></i>
+                </button>
+                
+              </div>
+            </div>
+          </form>
+        </div>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <span class="mdi mdi-menu"></span>
+      </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <div class="row row-offcanvas row-offcanvas-right">
+        <!-- partial:../../partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="../../index.html">
+                <span class="menu-title">Live Updates</span>
+                
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/icons/font-awesome.html">
+                <span class="menu-title">Public advice</span>
+                <i class="mdi mdi-contacts menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/forms/basic_elements.html">
+                <span class="menu-title">Donation</span>
+                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="../../pages/tables/bootstrap-table.html">
+                <span class="menu-title">Tweet updates</span>
+                <i class="mdi mdi-table-large menu-icon"></i>
+              </a>
+            </li>
+            
+          <div class="sidebar-progress">
+            <p>Cases all over India</p>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 90%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            
+          </div>
+          <div class="sidebar-progress">
+            <p>Cases in Tamilnadu</p>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 60%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+        </nav>
+        <!-- partial -->
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-6 d-flex align-items-stretch grid-margin">
+              <div class="row flex-grow">
+                <div class="col-12 grid-margin">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Donation</h4>
+                      <p class="card-description">
+                        Let's help the needy
+                      </p>
+                      <form class="forms-sample">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Donate:</label>
+                          <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter the donation amount">
+                        </div>
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">First name</label>
+                          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="First name:">
+                        </div>
+						<div class="form-group">
+                          <label for="exampleInputPassword1">Last name</label>
+                          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Last name:">
+                        </div>
+						<div class="form-group">
+                          <label for="exampleInputPassword1">Email</label>
+                          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter the email:">
+                        </div>
+						<div class="form-group">
+                          <label for="exampleInputPassword1">Phone</label>
+                          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter the phone number:">
+                        </div>
+						<div class="form-group">
+						<label for="exampleInputPassword1">Method of donation</label></br></br>
+						<label class="tm-radio-label mb-0"><input type="radio" name="pay" value="Onetime" class="mr-1" required> One Time</label>
+						<label class="tm-radio-label"><input type="radio" name="pay" value="Monthly" class="mr-1" required>Monthly</label>
+						</div>
+                        <input type="submit" class="btn btn-success mr-2" value="Donate">
+                        
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      
+                      <img src="c:/webophila/images/donate.jpg" class="forms-sample">
+                        
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Volenteer</h4>
+                  <p class="card-description">
+                    Help us fight against corona virus
+                  </p>
+                  <form class="forms-sample">
+                    <div class="form-group">
+                      <label for="exampleInputName1">Name</label>
+                      <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Email address</label>
+                      <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword4">Phone</label>
+                      <input type="password" class="form-control" id="exampleInputPassword4" placeholder="Phone number">
+                    </div>
+                    <div class="form-group">
+                      <label>Photo</label>
+                      <input type="file" name="img[]" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                        <span class="input-group-btn">
+                          <input type="file" class="file-upload-browse btn btn-info" value="upload">
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputCity1">Address</label>
+                      <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                    </div>
+                    
+                    <input type="submit" class="btn btn-success mr-2" value="volenteer">
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        
+        <!-- partial -->
+      </div>
+      <!-- row-offcanvas ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="../../node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="../../node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <script src="../../node_modules/icheck/icheck.min.js"></script>
+  <script src="../../bower_components/typeahead.js/dist/typeahead.bundle.min.js"></script>
+  <script src="../../node_modules/select2/dist/js/select2.min.js"></script>
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../js/file-upload.js"></script>
+  <script src="../../js/iCheck.js"></script>
+  <script src="../../js/typeahead.js"></script>
+  <script src="../../js/select2.js"></script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>
