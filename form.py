@@ -5,7 +5,7 @@ db=MySQLdb.connect("localhost","root","Goodluck","pm")
 app=Flask(__name__)
 @app.route("/")
 def index():
-	return render_template("form.html")
+	return render_template("contact.html")
 @app.route("/donate",methods=["GET","POST"])
 def donate():
     if request.method=="POST":
@@ -18,11 +18,21 @@ def donate():
         phone=pd['phn']
         db=MySQLdb.connect("localhost","root","Goodluck","pm")
         cur=db.cursor()
-        cur.execute("INSERT INTO Donation1(Firstname,Lastname,Email,Phone,Amount,Method) VALUES(%s,%s,%s,%s,%s,%s)",(fname,lname,Mail,phone,Amount,payment))
-        cur1=db.cursor()
-        query=select * from Donation where Phone=phone
+        cur.execute("INSERT INTO Donate(Firstname,Lastname,Email,Phone,Amount,Method) VALUES(%s,%s,%s,%s,%s,%s)",(fname,lname,Mail,phone,Amount,payment))
         db.commit()
         cur.close()
-        return render_template("checkout.html")
+        return redirect(url_for('checkout', phone=phone))
+@app.route("/checkout/<phone>")
+def checkout(phone):
+    db=MySQLdb.connect("localhost","root","Goodluck","pm")
+    cur=db.cursor()
+    query="select * from Donate where Phone="+phone
+    cur.execute(query)
+    m=cur.fetchone()
+    cur.close()
+    return render_template("checkout.html" ,m=m)
+@app.route("/Thankyou",methods=["GET","POST"])
+def thankyou():
+    return render_template("Thankyou.html")
 if __name__ == '__main__':
     app.run(debug=True)
