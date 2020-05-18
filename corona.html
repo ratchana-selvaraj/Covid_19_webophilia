@@ -1,0 +1,62 @@
+{% extends 'covid1.html' %}
+<html>
+<body>
+{%block content%}
+<header class="masthead">
+<div class="Container">
+<div class="row align-items-start ">
+<div class="col-6">
+<p class="text-info"> COVID 19 Cases all over India</p><br>
+<table class="table">
+<thead>
+<tr>
+<th scope="col">State</th>
+<th scope="col">Delta_Confirmed</th>
+<th scope="col">Delta_Deaths</th>
+<th scope="col">Delta_Recovered</th>
+</tr>
+</thead>
+<tbody>
+
+{%for pr in pair2%}
+<tr>
+	<td>{{pr[0]}}</td>
+	<td>{{pr[1]}}</td>
+	<td>{{pr[2]}}</td>
+	<td>{{pr[3]}}</td>
+</tr>
+{%endfor%}
+</tbody>
+</table></div>
+<div class="col-6">
+<img src="/static/images/tn.png" class="bg-img float-right" alt="Background Image">
+<p class="text-info">COVID 19 Cases in Madurai city</p><br><br><br>
+<table class="table">
+<thead>
+<tr>
+<th scope="col">District</th>
+<th scope="col">Confirmed</th>
+<th scope="col">Recovered</th>
+<th scope="col">Active</th>
+</tr>
+</thead>
+<tbody>
+{%for pr in pair1%}
+<tr>
+	<td>{{pr[0]}}</td>
+	<td>{{pr[1]}}</td>
+	<td>{{pr[2]}}</td>
+	<td>{{pr[3]}}</td>
+</tr>
+{%endfor%}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></div>
+</header>
+{%endblock%}
+</body>
+</html>
+
