@@ -5,176 +5,573 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Purple Admin</title>
+  <title>Covid19Info-your partner in crisis</title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="../../node_modules/mdi/css/materialdesignicons.min.css">
-  <link rel="stylesheet" href="../../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css">
+  <link rel="stylesheet" href="node_modules/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
-  <link rel="stylesheet" href="../../node_modules/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="node_modules/jquery-bar-rating/dist/themes/css-stars.css">
+  <link rel="stylesheet" href="node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="../../css/style.css">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="../../images/favicon.png" />
-</head>
+  <link rel="stylesheet" href="css/style.css">
+    <!-- Stylesheet -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        font-family: "pt-sans-bold", sans-serif;
+    font-weight: initial;
+      }
 
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        margin-top: 60px;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: monospace;
+        font-size: 17px;
+      }
+      .userText {
+        color: white;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+      }
+      .userText span {
+        background-color: #808080;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      .botText {
+        color: white;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: left;
+        line-height: 30px;
+      }
+      .botText span {
+        background-color: #4169e1;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      #tidbit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        margin-top: 60px;
+        border: 5px solid green;
+		background-color:'black';
+      }
+      .box {
+        border: 10px solid black;
+      }
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* Button used to open the chat form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup chat - hidden by default */
+.chat-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width:1000px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width textarea */
+.form-container textarea {
+  width: 100%;
+  padding: 50px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  min-height: 200px;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/send button */
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+</style>
+</head>
 <body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <h3 style="color:#6C3483;">Covid19Info</h3>
+		</div>
+      <div class="navbar-menu-wrapper d-flex align-items-stretch">
+        <div class="search-field ml-4 d-none d-md-block">
+          <form class="d-flex align-items-stretch h-100" action="search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-transparent border-0" placeholder="Search">
+              <div class="input-group-btn">
+                <button type="button" class="btn" aria-haspopup="true" aria-expanded="false">
+                  <i class="mdi mdi-earth"></i>
+                </button>
+
+              </div>
+              <div class="input-group-addon bg-transparent border-0 search-button">
+                <button type="submit" class="btn" onclick="search()">
+                  <i class="mdi mdi-magnify"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+        <span class="mdi mdi-menu"></span>
+      </button>
+      </div>
+    </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <div class="row row-offcanvas row-offcanvas-right">
-        <!-- partial:../../partials/_sidebar.html -->
-		<nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="D:\covid-19\corona.html">
-                <span class="menu-title href="corona.html">Live Covid-19 tracker</span>
+              <a class="nav-link" href="pages\charts\corona.html">
+                <span class="menu-title><h5 class="font-weight-normal mb-3">Live Covid-19 tracker</span></h5>
                 <span class="menu-sub-title"></span>
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
             </li>
-    
+
             <li class="nav-item">
               <a class="nav-link" href="pages/icons/font-awesome.html">
-                <span class="menu-title">Public Advice</span>
+                <span class="menu-title"><h5 class="font-weight-normal mb-3">Public Advice</span></h5>
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="pages/forms/basic_elements.html">
-                <span class="menu-title">Donate</span>
+               <span class="menu-title"><h5 class="font-weight-normal mb-3">Donate</span></h5>
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/bootstrap-table.html">
-                <span class="menu-title">Tweets</span>
+              <a class="nav-link" href="pages/tables/bootstrap-table.html">
+                <span class="menu-title"><h5 class="font-weight-normal mb-3">Tweets</span></h5>
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
-            
+
           <div class="sidebar-progress">
             <p>Cases all over India</p>
-             <p>17,400</p>
+             <p>95,000</p>
             <div class="progress progress-sm">
               <div class="progress-bar bg-gradient-success" role="progressbar" style="width: 90%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            
+
           </div>
           <div class="sidebar-progress">
             <p>Cases in Madurai</p>
-			<p>160</p>
+			<p>121</p>
             <div class="progress progress-sm">
               <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 50%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            
+
           </div>
         </nav>
         <!-- partial -->
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-lg-12 grid-margin">
-              <div class="card">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-warning text-white">
                 <div class="card-body">
-                  <h4 class="card-title">Public Advice</h4>
-                  <div class="icons-list row">
-                    <p>You can reduce your chances of being infected or spreading COVID-19 by taking some simple precautions:</p>
+                  <h4 class="font-weight-normal mb-3">Total Confirmed caese</h4>
+                  <h2 class="font-weight-normal mb-5">160</h2>
 
-<p> !!  Regularly and thoroughly clean your hands with an alcohol-based hand rub or wash them with soap and water. Why? Washing your hands with soap and water or using alcohol-based hand rub kills viruses that may be on your hands.
-<br>!!  Maintain at least 1 metre (3 feet) distance between yourself and others. Why? When someone coughs, sneezes, or speaks they spray small liquid droplets from their nose or mouth which may contain virus. If you are too close, you can breathe in the droplets, including the COVID-19 virus if the person has the disease.
-<br>!!  Avoid going to crowded places. Why? Where people come together in crowds, you are more likely to come into close contact with someone that has COIVD-19 and it is more difficult to maintain physical distance of 1 metre (3 feet).
-<br>!!  Avoid touching eyes, nose and mouth. Why? Hands touch many surfaces and can pick up viruses. Once contaminated, hands can transfer the virus to your eyes, nose or mouth. From there, the virus can enter your body and infect you.
-<br>!! Make sure you, and the people around you, follow good respiratory hygiene. This means covering your mouth and nose with your bent elbow or tissue when you cough or sneeze. Then dispose of the used tissue immediately and wash your hands. Why? Droplets spread virus. By following good respiratory hygiene, you protect the people around you from viruses such as cold, flu and COVID-19.
-<br>!!  Stay home and self-isolate even with minor symptoms such as cough, headache, mild fever, until you recover. Have someone bring you supplies. If you need to leave your house, wear a mask to avoid infecting others. Why? Avoiding contact with others will protect them from possible COVID-19 and other viruses.
-<br>!!  If you have a fever, cough and difficulty breathing, seek medical attention, but call by telephone in advance if possible and follow the directions of your local health authority. Why? National and local authorities will have the most up to date information on the situation in your area. Calling in advance will allow your health care provider to quickly direct you to the right health facility. This will also protect you and help prevent spread of viruses and other infections.
-<br>!!  Keep up to date on the latest information from trusted sources, such as WHO or your local and national health authorities. Why? Local and national authorities are best placed to advise on what people in your area should be doing to protect themselves.
- </p>
-                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-12 grid-margin">
-              <div class="card">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-info text-white">
                 <div class="card-body">
-                  <h4 class="card-title">Symptoms</h4>
-                  <div class="icons-list row">
-                   <p>Some common symptoms that have been specifically linked to COVID-19 include:</p> 
-				   <p>!!  shortness of breath<br>
-!!  Having a cough that gets more severe over time<br>
-!!  A low-grade fever that gradually increases in temperature<br>
-!!  Fatigue<br>
-!!  Trouble breathing<br>
-!!  Blue lips or face<br>
-!!  Persistent pain or pressure in the chest<br>
-!!  Confusion<br>
-!!  Excessive drowsiness<br>
-<br>
-The full list of symptoms is still being investigated by the Centers for Disease Control and Prevention (CDC)</p>
-                  </div>
+                  <h4 class="font-weight-normal mb-3">Active cases</h4>
+                  <h2 class="font-weight-normal mb-5">51</h2>
+
                 </div>
               </div>
             </div>
-            <div class="col-lg-12 grid-margin">
-              <div class="card">
+            <div class="col-md-4 stretch-card grid-margin">
+              <div class="card bg-gradient-success text-white">
                 <div class="card-body">
-                  <h4 class="card-title">Natural remedies</h4>
-                  <div class="icons-list row">
-                    <div class="row1">
-                    <div class="col1"><img src="c:/webophila/images/home.jpg" style="float:left;"><p><b>Prepare Home Cooked meals</b></p></div>
-					<div class="col2"><p>During regular daily life, many individuals often do not have the time to prepare home-cooked meals. Spending longer periods of time at home may now offer the possibility to make those recipes you previously did not have time to make.</p></div>
-				  </div></br>
-				 
-				  <div class="row2">
-                    <div class="col1"><img src="c:/webophila/images/salt.jpg" style="float:left;"><p><b>Maintain your diet</b></p></div>
-					<div class="col2"><p>Maintain a proper diet avoid consumption of high salts,sugar and fats.Consume high amount of fibre contained foods.</p></div>
-				  </div>
-                </div>
-				<div class="card-body">
-                  <div class="row1">
-                    <div class="col1"><img src="c:/webophila/images/drink.jpg" style="float:left;"><p><b>Keep youselves hydrated</b></p></div>
-					<div class="col2"><p>Good hydration is crucial for optimal health. Whenever available and safe for consumption, tap water is the healthiest and cheapest drink.Drinking water instead of sugar-sweetened beverages is a simple way to limit your intake of sugar and excess calories.</p></div>
-				  </div></br>
-				 
-				  <div class="row2">
-                    <div class="col1"><img src="c:/webophila/images/smoke.jpg" style="float:left;"><p><b>Avoid consumption of alcohols and smoking</b></p></div>
-					<div class="col2"><p>Avoid consuming these as they van easily lead to variety of disorders.Smokers have a risk against corono virus.</p></div>
-				  </div>
-                </div>
-				<div class="card-body">
-                  <div class="row1">
-                    <div class="col1"><img src="c:/webophila/images/healthy.jpg" style="float:left;"></br><p><b>Eat Foods that provides you immunity</b></p></div>
-					<div class="col2"><p>It is said that Lemon juice,Ginger and Garlic can provide you immunity and help to fight against corona virus.</p></div>
-				  </div></br>
-                  </div>
+                  <h4 class="font-weight-normal mb-3">Recovered</h4>
+                  <h2 class="font-weight-normal mb-5">107</h2>
+
                 </div>
               </div>
             </div>
-        <!-- partial:../../partials/_footer.html -->
-        <footer class="footer">
-          <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2017 <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap Dash</a>. All rights reserved.</span>
-            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
           </div>
-        </footer>
+          <div class="row">
+            <div class="col-md-7 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Graph</h4>
+				  <img src="c:/webophila/images/bar.jpg" class="mb-2 mw-100 w-100 rounded" alt="image">
+                </div>
+              </div>
+            </div>
+		  <div class="row">
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">
+					<div class="container">
+						<h2>Headlines now</h2>  
+						<div id="myCarousel" class="carousel slide" data-ride="carousel">
+					<!-- Indicators -->
+						<ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<li data-target="#myCarousel" data-slide-to="2"></li>
+						</ol>
+
+					<!-- Wrapper for slides -->
+					<div class="carousel-inner">
+					<div class="item active">
+						<img src="c:/webophila/images/news1.jpg"  style="width:100%;">
+					</div>
+					<div class="item">
+						<img src="c:/webophila/images/news2.jpg" alt="Chicago" style="width:100%;">
+					</div>
+					<div class="item">
+						<img src="c:/webophila/images/news3.jpg" alt="New york" style="width:100%;">
+					</div>
+					</div>
+
+					<!-- Left and right controls -->
+					<a class="prev carousel-control" href="#myCarousel" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+					<span class="sr-only">Previous</span>
+					</a>
+					<a class="next carousel-control" href="#myCarousel" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right"></span>
+					<span class="sr-only">Next</span>
+					</a>
+					</div>
+					</div>
+								<form><button type="submit" value="More" onclick="url(icons.html)">For More news>></button></form>
+					</div>
+					</div>
+					</div>
+					</div>
+
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title" style="color:#6C3483;">Approved facts of Covid-19 from WHO</h4></br>
+                  <div class="row mt-3">
+                    <div class="col-6 pr-1">
+                      <img src="c:/webophila/images/pic2.png" class="mb-2 mw-100 w-100 rounded" alt="image">
+                      <img src="c:/webophila/images/healthdrink.jpg" class="mw-100 w-100 rounded" alt="image">
+
+                    </div>
+                    <div class="col-6 pl-1">
+                      <img src="c:/webophila/images/pic3.png" class="mb-2 mw-100 w-100 rounded" alt="image">
+                      <img src="c:/webophila/images/pic1.png" class="mw-100 w-100 rounded" alt="image">
+                    </div>
+                  </div>
+                  <div class="d-flex mt-5 align-items-top">
+                    <div class="ml-auto">
+                      <i class="mdi mdi-heart-outline text-muted"></i>
+                    </div>
+					
+					</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Tweet Updates</h4>
+                  <div class="table-responsive">
+                    <table class="table" style="font-family:sans-serif;font-size:15px;">
+                      <thead>
+                        <tr>
+
+                          <th>
+                            Profile
+                          </th>
+                          <th>
+                            Date and time
+                          </th>
+                          <th>
+                            Tweet
+                          </th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            Vijaya baskar
+                          </td>
+                          <td>
+                            17-05-2020 09:00:00
+                          </td>
+                          <td>
+                            <p>Today, at Ilupur Primary http://Agri.Coop Society, launched #COVID__19 special loan for Women Self Help Groups that will help them meet their needs during this crisis situation. 
+                          </p>
+						  </td>
+                        </tr>
+                         <tr>
+                          <td>
+                            Vijaya baskar
+                          </td>
+                          <td>
+                            16-05-2020 22:00:00
+                          </td>
+                          <td>
+                            <p>At my Constituency #Viralimalai today, overseen Covid control measures, gave kabasura kudineer & distributed fresh vegetables & eggs to the public. 
+                          </p>
+						  </td>
+
+                        </tr>
+                           <tr>
+                          <td>
+                            narendramodi
+                          </td>
+                          <td>
+                            17-05-2020 09:19:00
+                          </td>
+                          <td>
+                            <p>I look forward to your ideas and inputs for this month’s #MannKiBaat, which will take place on the 31st. You can:
+
+Record a message by dialling 1800-11-7800. 
+
+Write on NaMo App or MyGov.
+
+                          </p>
+						  </td>
+
+                        </tr>
+                                                   <tr>
+                          <td>
+                            Narendra modi
+                          </td>
+                          <td>
+                            17-05-2020 09:19:00
+                          </td>
+                          <td>
+                            <p>Greetings to Union Minister Shri 
+@TCGEHLOT
+ Ji on his birthday. May Almighty bless him with a long and healthy life.
+
+                          </p>
+						  </td>
+
+                        </tr>
+                        <tr>
+                          <td>
+                            Su Venkatesan MP
+                          </td>
+                          <td>
+                           16-05-2020 10:00:00
+                          </td>
+                          <td>
+                            நேற்றைய #அன்னவாசல் 
+இரு முக்கியக் #கொடையாளர்கள்
+
+சு.வெங்கடேசன் எம்.பி
+
+பெருந்தொற்றுக் காலத்தை வெல்லும் மனிதமுயற்சிகள் தோற்காது என்ற நம்பிக்கையை சமூகத்துக்கு உரக்கச்சொல்பவர்கள் இவர்களே!
+                          </td>
+
+                        </tr>
+
+                      </tbody>
+                    </table>
+					<form><button type="submit" onclick="url(#)">Want to read more tweets?</button></form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+<div>
+
+
+<button class="open-button" onclick="openForm()">Chat</button>
+
+<div class="chat-popup" id="myForm">
+
+    <div class="box"></div>
+    <div class="boxed">
+      <div>
+        <div id="chatbox">
+          <img
+            src="https://user-images.githubusercontent.com/20112458/49326597-773b7280-f57a-11e8-853d-20ed61d18b0d.png"
+            alt="CANDICE"
+            style="width:40px;height:40px;"
+          />
+		  
+          <p class="botText">
+            <span>Hi! I'm Jarvis your personal ChatBot ❤️</span>
+          </p>
+        </div>
+        <div id="userInput">
+          <input id="textInput" type="text" name="msg" placeholder="Message" />
+        </div>
+      </div>
+      <script>
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+            $("#chatbox").append(botHtml);
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        $("#textInput").keypress(function(e) {
+          if (e.which == 13) {
+            getBotResponse();
+          }
+        });
+		function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+      </script>
+  <form action="/action_page.php" class="form-container">  <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+
+<script>
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
+
+
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+
         <!-- partial -->
       </div>
+      <!-- row-offcanvas ends -->
     </div>
+    <!-- page-body-wrapper ends -->
   </div>
+  <!-- container-scroller -->
 
   <!-- plugins:js -->
-  <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="../../node_modules/popper.js/dist/umd/popper.min.js"></script>
-  <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="../../node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.min.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
+  <script src="node_modules/chart.js/dist/Chart.min.js"></script>
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="../../js/off-canvas.js"></script>
-  <script src="../../js/misc.js"></script>
+  <script src="js/off-canvas.js"></script>
+  <script src="js/misc.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
+  <script src="js/dashboard.js"></script>
+      <!-- ##### All Javascript Script ##### -->
+    <!-- jQuery-2.2.4 js -->
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="js/bootstrap/newspopper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="js/bootstrap/newsbootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="js/active.js"></script>
   <!-- End custom js for this page-->
 </body>
 
 </html>
+
