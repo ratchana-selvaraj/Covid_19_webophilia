@@ -1,0 +1,76 @@
+{"intents": [
+        {"tag": "greeting",
+         "patterns": ["Hi", "Hello", "Good day","hi","hello","Hey","hey","Hey there"],
+         "responses": ["Hello, thanks for visiting", "Hey glad to talk","Good to see you again", "Hi there, how can I help?","hey lets talk"],
+         "context_set": ""
+        },
+		{"tag":"health_reply",
+		"patterns":["Iam good","Iam fine","Good"],
+		"responses":["Glad to hear","Good to know","Awesome!"],
+		"context_set":""},
+		{"tag":"health_inquiry",
+		"patterns":["How are you?","How are you doing?","How's your day?"],
+		"responses":["Good going","Great!How are you?","Awesome!Just like you","Fine!Hw about you?"],
+		"context_set":""},
+        {"tag": "goodbye",
+         "patterns": ["Bye", "See you later", "Goodbye","Tata"],
+         "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon.","Its was nice to talk"],
+		 "context_set":""
+        },
+        {"tag": "thanks",
+         "patterns": ["Thanks", "Thank you", "That's helpful"],
+         "responses": ["Happy to help!", "Any time!", "My pleasure","Iam here for u"],
+		 "context_set":""
+        },
+		{"tag": "loneliness",
+         "patterns": ["Iam feeling lonely","Iam lonely","I want someone to talk"],
+         "responses": ["Everybody have their lows.Don't worry", "Iam there for you and there are people around you to love you!", "People love you!They'll come around","Iam your friend too you can't be lonely"],
+		 "context_set":""
+		},
+		{"tag": "depression",
+         "patterns": ["Iam depressed", "I feel depressed", "I think i have depression"],
+         "responses": ["Are you sure?I can give you the symptoms", "Time will heal you.Can you tell me how you feel?", "Connect with somebody around you.Can you be specific about your feeling","Seek out for help!I can help.Tell me how you feel."],
+		 "context_set":""
+        },
+		{"tag": "symptoms",
+         "patterns": ["Anxious,sad,hatred", "I feel sad all the time", "I seem to have lost sleep","I can't sleep","Iam anxious and angry"],
+         "responses": ["Well that doesn't mean you have depression.You can check out the symptoms type Symptoms of depression", "Time will heal you.You can check out the symptoms type Symptoms of depression"],
+		 "context_set":""
+        },
+		{"tag": "talk",
+         "patterns": ["Can i talk to you?", "I wanna talk", "I want to talk","I want a friend"],
+         "responses": ["Lets talk!", "Iam ready to talk!Lets do it!! ", "Iam there to listen","Iam ready to listen"],
+		 "context_set":""
+        },
+		{"tag": "query",
+         "patterns": ["What can you do?", "what can do you? ", "What do you do","What's your job?"],
+         "responses": ["I can talk with you,get you to know the symptoms of depression", "I can be your friend and help you talk out", "I can listen to your thoughts and tell you about depression"],
+		 "context_set":""
+        },
+		{"tag": "depression_symptoms",
+         "patterns": ["What are the symptoms of depression?", "Symptoms of depression", "Depression symptoms"],
+         "responses": ["Some of them are anxiety,sudden appetite and weight change,mood swings.For more info you can check out this link https://www.healthline.com/health/depression/recognizing-symptoms"],
+		 "context_set":""
+        },
+		{"tag": "cheer_up",
+         "patterns": ["Can you cheer me up?","Help me to be happy", "I want to be happy"],
+         "responses": ["Let me cheer you up.Want to hear a joke?Ask me to tell a joke"],
+		 "context_set":""
+        },
+		{"tag": "joke",
+         "patterns": ["Tell a joke","crack a joke", "I want to hear a joke","Tell me a joke"],
+         "responses": ["Me: Would you like to be the sun in my life?Her: Awww... Yes!!!Me: Good then stay 92.96 million miles away from me","Why are frogs always so happy? They eat what ever bugs them","What do you call an alligator who's a detective? An investi-gator","What lights up a soccer stadium? A soccer match","Why shouldn't you write with a broken pencil? Because...it's pointless","What's the difference between the bird flu and the swine flu? One requires tweetment and the other an oinkment."],
+		 "context_set":""
+        },
+		{"tag": "no_understand",
+         "patterns":[],
+         "responses": ["Sorry!Try again"],
+		 "context_set":""
+        }
+		{"tag": "weather",
+         "patterns":["How's the weather today?","What's the weather today?","How's weather today?"],
+         "responses": ["It's a pleasant sunny time","It a calming cloudy day","Its storming rain today"],
+		 "context_set":""
+        }
+   ]
+}
