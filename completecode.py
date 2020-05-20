@@ -167,14 +167,26 @@ def corona_dist():
 	mdu_c=mdu.groupby('District').sum()[['Confirmed','Recovered','Active']]
 	mdu_c.head()
 	return mdu_c
+def graph_1():
+    df=pd.read_csv('https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv')
+    df
+    cdf=df[df['Country/Region'].str.contains('India')]
+    cols=['Date','Confirmed']
+    cdf1=cdf[cols]
+    cdf1
+    fig=pg.bar(cdf1,x='Date',y='Confirmed',title = 'Corona confirmation all across India : Time series')
+    return fig
+fig=graph_1()
 mdu_c=corona_dist()
 pair1=[(District,Confirmed,Recovered,Active) for District,Confirmed,Recovered,Active in zip(mdu_c.index,mdu_c['Confirmed'],mdu_c['Recovered'],mdu_c['Active'])]
 corona_count = Corona_State()
 pair2=[(State,Delta_Confirmed,Delta_Deaths,Delta_Recovered) for State,Delta_Confirmed,Delta_Deaths,Delta_Recovered in zip(corona_count.index,corona_count['Delta_Confirmed'],corona_count['Delta_Deaths'],corona_count['Delta_Recovered'])]
+@app.route('/')
 def live_tracker():
 	mdu_c=corona_dist()
 	corona_count = Corona_State()
-	return render_template('corona.html',table = mdu_c,map=corona_count,pair1=pair1,pair2=pair2)
+	fig=graph_1().to_html()
+	return render_template('index.html',table = mdu_c,map=corona_count,pair1=pair1,pair2=pair2,fig=fig)
 #News flash
 #def flashnews():
 #search button function
