@@ -104,13 +104,14 @@
           </div>
         </nav>
         <!-- partial -->
+	{% for pr in pair1%}
         <div class="content-wrapper">
           <div class="row">
             <div class="col-md-4 stretch-card grid-margin">
               <div class="card bg-gradient-warning text-white">
                 <div class="card-body">
                   <h4 class="font-weight-normal mb-3">Total Confirmed caese</h4>
-                  <h2 class="font-weight-normal mb-5">160</h2>
+                  <h2 class="font-weight-normal mb-5">{{p[1]}}</h2>
                   
                 </div>
               </div>
@@ -118,8 +119,8 @@
             <div class="col-md-4 stretch-card grid-margin">
               <div class="card bg-gradient-info text-white">
                 <div class="card-body">
-                  <h4 class="font-weight-normal mb-3">Active cases</h4>
-                  <h2 class="font-weight-normal mb-5">51</h2>
+                  <h4 class="font-weight-normal mb-3">Recovered</h4>
+                  <h2 class="font-weight-normal mb-5">{{p[2]}}</h2>
                   
                 </div>
               </div>
@@ -127,19 +128,20 @@
             <div class="col-md-4 stretch-card grid-margin">
               <div class="card bg-gradient-success text-white">
                 <div class="card-body">
-                  <h4 class="font-weight-normal mb-3">Recovered</h4>
-                  <h2 class="font-weight-normal mb-5">107</h2>
+                  <h4 class="font-weight-normal mb-3">Active</h4>
+                  <h2 class="font-weight-normal mb-5">{{p[3]}}<h2>
                   
                 </div>
               </div>
             </div>
           </div>
+	{% endfor %}
           <div class="row">
             <div class="col-md-7 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Graph</h4>
-				  <img src="D:/covid-19/images/bar_graph.png" class="mb-2 mw-100 w-100 rounded" alt="image">
+		{{fig | safe}};
                   <canvas id="sales-chart"></canvas>
 				  
                 </div>
