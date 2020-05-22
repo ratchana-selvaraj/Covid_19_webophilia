@@ -15,14 +15,14 @@
   <link rel="stylesheet" href="node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" />
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="static/css/style.css">
     <!-- Stylesheet -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-    body {
+  body {
         font-family: "pt-sans-bold", sans-serif;
     font-weight: initial;
       }
@@ -159,6 +159,20 @@ body {font-family: Arial, Helvetica, sans-serif;}
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
 }
+.mytable {  background-color:#FFFFE0;
+			border-collapse:collapse;
+			font-family:Georgia, Garamond, Serif;
+			color:black; }
+.mytable th { width:30%;
+				font-family: Helvetica;
+				text-shadow: 1px 1px 4px black;
+				letter-spacing:0.2em;
+				background-color:#BDB76B;color:white; }
+.mytable td, .mytable th { padding:2.5px;
+						border:0.5px solid #BDB76B; }
+.mytable td { line-height:1.8em;
+			font-size: 1.4rem;
+			font-family : cursive;}
 </style>
 </head>
 <body>
@@ -166,32 +180,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <h3 style="color:#6C3483;">Covid19Info</h3>
+        <img src="static/images/tn.png" width="50" height="50"style="float:left"><h3 style="color:#6C3483;">Covid19Info</h3>
 		</div>
-      <div class="navbar-menu-wrapper d-flex align-items-stretch">
-        <div class="search-field ml-4 d-none d-md-block">
-          <form class="d-flex align-items-stretch h-100" action="search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-transparent border-0" placeholder="Search">
-              <div class="input-group-btn">
-                <button type="button" class="btn" aria-haspopup="true" aria-expanded="false">
-                  <i class="mdi mdi-earth"></i>
-                </button>
-
-              </div>
-              <div class="input-group-addon bg-transparent border-0 search-button">
-                <button type="submit" class="btn" onclick="search()">
-                  <i class="mdi mdi-magnify"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-        <span class="mdi mdi-menu"></span>
-      </button>
-      </div>
+		<h3>hello</h3>
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
@@ -200,28 +191,34 @@ body {font-family: Arial, Helvetica, sans-serif;}
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="D:\covid-19\corona.html">
-                <span class="menu-title href="corona.html"><h5 class="font-weight-normal mb-3">Live Covid-19 tracker</span></h5>
+              <a class="nav-link" href="/">
+                <span class="menu-title"><h5 class="font-weight-normal mb-3">Live Updates</span></h5>
                 <span class="menu-sub-title"></span>
                 <i class="mdi mdi-home menu-icon"></i>
               </a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="pages/icons/font-awesome.html">
+              <a class="nav-link" href="/public">
                 <span class="menu-title"><h5 class="font-weight-normal mb-3">Public Advice</span></h5>
                 <i class="mdi mdi-contacts menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/forms/basic_elements.html">
+              <a class="nav-link" href="/donation">
                <span class="menu-title"><h5 class="font-weight-normal mb-3">Donate</span></h5>
                 <i class="mdi mdi-format-list-bulleted menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../pages/tables/bootstrap-table.html">
-                <span class="menu-title"><h5 class="font-weight-normal mb-3">Tweets</span></h5>
+              <a class="nav-link" href="/tweets">
+                <span class="menu-title"><h5 class="font-weight-normal mb-3">Tweet updates</span></h5>
+                <i class="mdi mdi-table-large menu-icon"></i>
+              </a>
+            </li>
+			<li class="nav-item">
+              <a class="nav-link" href="/helpdesk">
+                <span class="menu-title"><h5 class="font-weight-normal mb-3">Help Desk</span></h5>
                 <i class="mdi mdi-table-large menu-icon"></i>
               </a>
             </li>
@@ -244,13 +241,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
           </div>
         </nav>
         <!-- partial -->
+		{% for pr in pair1%}
         <div class="content-wrapper">
           <div class="row">
             <div class="col-md-4 stretch-card grid-margin">
               <div class="card bg-gradient-warning text-white">
                 <div class="card-body">
                   <h4 class="font-weight-normal mb-3">Total Confirmed caese</h4>
-                  <h2 class="font-weight-normal mb-5">160</h2>
+                  <h2 class="font-weight-normal mb-5">{{pr[1]}}</h2>
 
                 </div>
               </div>
@@ -259,7 +257,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
               <div class="card bg-gradient-info text-white">
                 <div class="card-body">
                   <h4 class="font-weight-normal mb-3">Active cases</h4>
-                  <h2 class="font-weight-normal mb-5">51</h2>
+                  <h2 class="font-weight-normal mb-5">{{pr[2]}}</h2>
 
                 </div>
               </div>
@@ -268,20 +266,26 @@ body {font-family: Arial, Helvetica, sans-serif;}
               <div class="card bg-gradient-success text-white">
                 <div class="card-body">
                   <h4 class="font-weight-normal mb-3">Recovered</h4>
-                  <h2 class="font-weight-normal mb-5">107</h2>
+                  <h2 class="font-weight-normal mb-5">{{pr[3]}}</h2>
 
                 </div>
               </div>
             </div>
           </div>
+		  {% endfor %}
           <div class="row">
             <div class="col-md-7 grid-margin stretch-card">
               <div class="card">
-                <div class="card-body">
+                <div class="card-body" >
                   <h4 class="card-title">Graph</h4>
-				  <img src="D:/covid-19/images/bar_graph.png" class="mb-2 mw-100 w-100 rounded" alt="image">
-                  <canvas id="sales-chart"></canvas>
-
+				  {{fig | safe}}; 
+                </div>
+              </div>
+            </div>
+			<div class="col-md-7 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+				    {{ cmap| safe}}
                 </div>
               </div>
             </div>
@@ -302,16 +306,18 @@ body {font-family: Arial, Helvetica, sans-serif;}
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner">
 					<div class="item active">
-						<img src="la.jpg" alt="Los Angeles" style="width:100%;">
-					</div>
-					<div class="item">
-						<img src="chicago.jpg" alt="Chicago" style="width:100%;">
-					</div>
-					<div class="item">
-						<img src="ny.jpg" alt="New york" style="width:100%;">
-					</div>
-					</div>
+						{% for new, des, i in context %}
 
+    <img src="{{i}}" alt="" width="200">
+    <h3>News: </h3> {{new}}
+    <h4>Description: </h4> {{des}}
+
+    {% endfor %}
+						</div>
+					</div>
+			</br><a class="nav-link" href="https://timesofindia.indiatimes.com/city/madurai">
+					 <span class="menu-title"><h5 class="font-weight-normal mb-3" style="color: green;">Read more news</span></h5> 
+                  </a>
 					<!-- Left and right controls -->
 					<a class="prev carousel-control" href="#myCarousel" data-slide="prev">
 					<span class="glyphicon glyphicon-chevron-left"></span>
@@ -323,47 +329,21 @@ body {font-family: Arial, Helvetica, sans-serif;}
 					</a>
 					</div>
 					</div>
-								<form><button type="submit" value="More" onclick="url(icons.html)">For More news>></button></form>
+								
 					</div>
 					</div>
 					</div>
 					</div>
-
-          <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Approved facts of Covid-19 from WHO</h4>
-                  <div class="row mt-3">
-                    <div class="col-6 pr-1">
-                      <img src="D:/covid-19/images/pic1.jpg" class="mb-2 mw-100 w-100 rounded" alt="image">
-                      <img src="D:/covid-19/images/pic4.jpg" class="mw-100 w-100 rounded" alt="image">
-                    </div>
-                    <div class="col-6 pl-1">
-                      <img src="D:/covid-19/images/pic2.jpg" class="mb-2 mw-100 w-100 rounded" alt="image">
-                      <img src="D:/covid-19/images/pic3.jpg" class="mw-100 w-100 rounded" alt="image">
-                    </div>
-                  </div>
-                  <div class="d-flex mt-5 align-items-top">
-                    <div class="ml-auto">
-                      <i class="mdi mdi-heart-outline text-muted"></i>
-                    </div>
-					<form><button type="submit" value="More" onclick="url(icons.html)">Click For More >></button></form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Tweet Updates</h4>
+                  <h4 class="card-title"style="color:#6C3483;" >Tweet Updates</h4>
                   <div class="table-responsive">
-                    <table class="table" style="font-family:sans-serif;font-size:15px;">
+                    <table class="mytable">
                       <thead>
-                        <tr>
+<tr>
+
 
                           <th>
                             Profile
@@ -457,19 +437,17 @@ Write on NaMo App or MyGov.
 
                       </tbody>
                     </table>
-					<form><button type="submit" onclick="url(#)">Want to read more tweets?</button></form>
-                  </div>
+					<a class="nav-link" href="/tweets">
+					 <span class="menu-title"><h5 class="font-weight-normal mb-3" style="color: green;">Want to read more tweets?</span></h5> 
+                  </a>
+				  </div>
                 </div>
               </div>
             </div>
           </div>
-<div>
 
+<button class="open-button" onclick="openForm()">Chat</button>
 
-<button class="open-button" onclick="openForm()">Chat with Jarvis</button>
-<form>
-<button class="btn btn-lg" onclick="get_bot_response()">Start chatting</button>
-</form>
 <div class="chat-popup" id="myForm">
 
     <div class="box"></div>
@@ -557,23 +535,24 @@ function closeForm() {
   <script src="node_modules/chart.js/dist/Chart.min.js"></script>
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="js/off-canvas.js"></script>
-  <script src="js/misc.js"></script>
+  <script src="static/js/off-canvas.js"></script>
+  <script src="static/js/misc.js"></script>
   <!-- endinject -->
   <!-- Custom js for this page-->
-  <script src="js/dashboard.js"></script>
+  <script src="static/js/dashboard.js"></script>
       <!-- ##### All Javascript Script ##### -->
     <!-- jQuery-2.2.4 js -->
-    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="static/js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
-    <script src="js/bootstrap/newspopper.min.js"></script>
+    <script src="static/js/bootstrap/newspopper.min.js"></script>
     <!-- Bootstrap js -->
-    <script src="js/bootstrap/newsbootstrap.min.js"></script>
+    <script src="static/js/bootstrap/newsbootstrap.min.js"></script>
     <!-- All Plugins js -->
-    <script src="js/plugins/plugins.js"></script>
+    <script src="static/js/plugins/plugins.js"></script>
     <!-- Active js -->
-    <script src="js/active.js"></script>
+    <script src="static/js/active.js"></script>
   <!-- End custom js for this page-->
 </body>
 
 </html>
+
