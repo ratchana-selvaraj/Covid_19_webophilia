@@ -98,39 +98,44 @@ def bag_of_words(s, words):
     return numpy.array(bag)
 @app.route('/get')
 def get_bot_response():
-	while True:
-		inp = request.args.get('msg')    
-		results = model.predict([bag_of_words(inp, words)])
-		results_index = numpy.argmax(results)
-		tag = labels[results_index]
-		for tg in data["intents"]:
-			if tg['tag'] == tag:
-				responses = tg['responses']
-		if(random.choice(responses)=="See you later, thanks for visiting" or random.choice(responses)== "Have a nice day" or random.choice(responses)=="Bye! Come back again soon." or random.choice(responses)=="Its was nice to talk"):
-			return(str(random.choice(responses))) 
-			quit()
-		else:
-			return(str(random.choice(responses))) 
+    try:
+        while True:
+            inp = request.args.get('msg')    
+            results = model.predict([bag_of_words(inp, words)])
+            results_index = numpy.argmax(results)
+            tag = labels[results_index]
+            for tg in data["intents"]:
+                if tg['tag'] == tag:
+                    responses = tg['responses']
+            if(random.choice(responses)=="See you later, thanks for visiting" or random.choice(responses)== "Have a nice day" or random.choice(responses)=="Bye! Come back again soon." or random.choice(responses)=="Its was nice to talk"):
+                return(str(random.choice(responses))) 
+                quit()
+            else:
+                return(str(random.choice(responses))) 
+    except Exception as e:
+	    return render_template("error.html", error = str(e))
 @app.route('/')
 def Index():
-	newsapi = NewsApiClient(api_key="b0f75ce660c0466a9a98c2478f8abb62")
-	topheadlines = newsapi.get_top_headlines(sources="the-times-of-india")
-	articles = topheadlines['articles']
-	desc = []
-	news = []
-	img = []
-	for i in range(len(articles)):
-		myarticles = articles[i]
-		news.append(myarticles['title'])
-		desc.append(myarticles['description'])
-		img.append(myarticles['urlToImage'])
-	mylist = zip(news, desc, img)
-	mdu_c=corona_dist()
-	corona_count = Corona_State()
-	fig=graph_1().to_html()
-	html_map=m._repr_html_()
-	return render_template('index.html', context = mylist,table = mdu_c,map=corona_count,pair1=pair1,pair2=pair2,fig=fig,cmap=html_map)
-	
+    try:
+        newsapi = NewsApiClient(api_key="b0f75ce660c0466a9a98c2478f8abb62")
+        topheadlines = newsapi.get_top_headlines(sources="the-times-of-india")
+        articles = topheadlines['articles']
+        desc = []
+        news = []
+        img = []
+        for i in range(len(articles)):
+            myarticles = articles[i]
+            news.append(myarticles['title'])
+            desc.append(myarticles['description'])
+            img.append(myarticles['urlToImage'])
+        mylist = zip(news, desc, img)
+        mdu_c=corona_dist()
+        corona_count = Corona_State()
+        fig=graph_1().to_html()
+        html_map=m._repr_html_()
+        return render_template('index.html', context = mylist,table = mdu_c,map=corona_count,pair1=pair1,pair2=pair2,fig=fig,cmap=html_map)
+	except Exception as e:
+	    return render_template("error.html", error = str(e))
 def Corona_State():
     coronadf=pd.read_csv('https://api.covid19india.org/csv/latest/state_wise.csv')
     coronadf.head()
@@ -174,111 +179,134 @@ pair2=[(State,Delta_Confirmed,Delta_Deaths,Delta_Recovered) for State,Delta_Conf
 
 @app.route("/public")
 def public():
-    return render_template("font-awesome.html")
+    try:
+        return render_template("font-awesome.html")
+    except Exception as e:
+	    return render_template("error.html", error = str(e))
 @app.route("/donation") 
 def donation():
-	return render_template("basic_elements.html")
+    try:
+        return render_template("basic_elements.html")
+    except Exception as e:
+	    return render_template("error.html", error = str(e))
 @app.route("/donate",methods=["GET","POST"])
 def donate():
-    if request.method=="POST":
-        pd=request.form
-        Amount=pd['amt']
-        payment=pd['pay']
-        fname=pd['fname']
-        lname=pd['lname']
-        Mail=pd['email']
-        phone=pd['phn']
-        db=MySQLdb.connect("localhost","root","Alohomora123","Donate")
-        cur=db.cursor()
-        cur.execute("INSERT INTO Donate(Firstname,Lastname,Email,Phone,Amount,Method) VALUES(%s,%s,%s,%s,%s,%s)",(fname,lname,Mail,phone,Amount,payment))
-        db.commit()
-        cur.close()
-        return render_template('checkout', phone=phone)
+    try:
+        if request.method=="POST":
+            pd=request.form
+            Amount=pd['amt']
+            payment=pd['pay']
+            fname=pd['fname']
+            lname=pd['lname']
+            Mail=pd['email']
+            phone=pd['phn']
+            db=MySQLdb.connect("localhost","root","Alohomora123","Donate")
+            cur=db.cursor()
+            cur.execute("INSERT INTO Donate(Firstname,Lastname,Email,Phone,Amount,Method) VALUES(%s,%s,%s,%s,%s,%s)",(fname,lname,Mail,phone,Amount,payment))
+            db.commit()
+            cur.close()
+            return render_template('checkout', phone=phone)
+    except Exception as e:
+	    return render_template("error.html", error = str(e))
 @app.route("/checkout/<phone>")
 def checkout(phone):
-    db=MySQLdb.connect("localhost","root","Goodluck","pm")
-    cur=db.cursor()
-    query="select * from Donate where Phone="+phone
-    cur.execute(query)
-    m=cur.fetchone()
-    cur.close()
-    return render_template("checkout.html" ,m=m)
+    try:
+        db=MySQLdb.connect("localhost","root","Goodluck","pm")
+        cur=db.cursor()
+        query="select * from Donate where Phone="+phone
+        cur.execute(query)
+        m=cur.fetchone()
+        cur.close()
+        return render_template("checkout.html" ,m=m)
+    except Exception as e:
+	    return render_template("error.html", error = str(e))
 @app.route("/Thankyou",methods=["GET","POST"])
 def thankyou():
-    return render_template("volenteer.html")
+    try:
+        return render_template("volenteer.html")
+    except Exception as e:
+	    return render_template("error.html", error = str(e))
 @app.route("/volenteer",methods=["GET","POST"])
 def volenteer():
-	if (request.method=='POST'):
-		vfname=vfnames.append(request.form['Vfname'])
-		vlname=vlnames.append(request.form['Vlname'])
-		vemail=vemails.append(request.form['email'])
-		vphone=vphones.append(request.form['Phn'])
-		vadd=vaddrs.append(request.form['addr'])
-	return render_template("volenteer.html")
+    try:
+        if (request.method=='POST'):
+            vfname=vfnames.append(request.form['Vfname'])
+            vlname=vlnames.append(request.form['Vlname'])
+            vemail=vemails.append(request.form['email'])
+            vphone=vphones.append(request.form['Phn'])
+            vadd=vaddrs.append(request.form['addr'])
+        return render_template("volenteer.html")
+    except Exception as e:
+	    return render_template("error.html", error = str(e))
 #@app.route('/volunteerdisplay',methods=['POST','GET'])
 #def volunteerdisplay():	
 @app.route("/helpdesk")
 def helpdesk():
-    return render_template("helpdesk.html")
+    try:
+        return render_template("helpdesk.html")
+    except Exception as e:
+	    return render_template("error.html", error = str(e))
 @app.route('/tweets',methods=['POST','GET'])
 def tweet_scrap():
-	username1="Vijayabaskarofl"
-	count=20
-	username2="SuVe4Madurai"
-	username3="narendramodi"
-	tweetCriteria1=got3.manager.TweetCriteria().setUsername(username1).setMaxTweets(count)
-	tweetCriteria2=got3.manager.TweetCriteria().setUsername(username2).setMaxTweets(count)
-	tweetCriteria3=got3.manager.TweetCriteria().setUsername(username3).setMaxTweets(count)
-	dict_obj_eng1=my_dictionary()
-	dict_obj_tam1=my_dictionary()
-	dict_obj_eng2=my_dictionary()
-	dict_obj_tam2=my_dictionary()
-	dict_obj_eng3=my_dictionary()
-	dict_obj_tam3=my_dictionary()
-	for i in range(count):
-		tweets1=got3.manager.TweetManager.getTweets(tweetCriteria1)[i]
-		result1=langid.classify(tweets1.text)
-		try:		
-			if(result1[0]=='en'):
-				dict_obj_eng1.add(str(tweets1.date),tweets1.text)
-				translated = translator.translate(tweets1.text,src='en',dest='ta')
-				dict_obj_tam1.add(str(tweets1.date),translated.text)
-			elif(result1[0]=='ta'):
-				dict_obj_tam1.add(str(tweets1.date),tweets1.text)
-				translated = translator.translate(tweets1.text,src='ta',dest='en')
-				dict_obj_eng1.add(str(tweets1.date),translated.text)
-		except:
-			continue
-	for i in range(count):
-		tweets2=got3.manager.TweetManager.getTweets(tweetCriteria2)[i]
-		result2=langid.classify(tweets2.text)
-		try:
-			if(result2[0]=='en'):
-				dict_obj_eng2.add(str(tweets2.date),tweets2.text)
-				translated = translator.translate(tweets2.text,src='en', dest='ta')
-				dict_obj_tam2.add(str(tweets2.date),translated.text)
-			elif(result2[0]=='ta'):
-				dict_obj_tam2.add(str(tweets2.date),tweets2.text)
-				translated = translator.translate(tweets2.text,src='ta', dest='en')
-				dict_obj_eng2.add(str(tweets2.date),translated.text)
-		except:
-			continue
-	for i in range(count):
-		tweets3=got3.manager.TweetManager.getTweets(tweetCriteria3)[i]
-		result3=langid.classify(tweets3.text)
-		try:
-			if(result3[0]=='en'):
-				dict_obj_eng3.add(str(tweets3.date),tweets3.text)
-				translated = translator.translate(tweets2.text,src='en', dest='ta')
-				dict_obj_tam3.add(str(tweets3.date),translated.text)
-			elif(result3[0]=='hi'):
-				translatedt= translator.translate(tweets3.text,src='hi', dest='ta')
-				dict_obj_tam3.add(str(tweets3.date),translatedt.text)
-				translated = translator.translate(tweets2.text,src='hi', dest='en')
-				dict_obj_eng3.add(str(tweets3.date),translated.text)
-		except:
-			continue
-	return render_template('tweet.html',dict_obj_eng1=dict_obj_eng1,dict_obj_eng2=dict_obj_eng2,dict_obj_eng3=dict_obj_eng3,dict_obj_tam1=dict_obj_tam1,dict_obj_tam2=dict_obj_tam2,dict_obj_tam3=dict_obj_tam3)
+    try:
+        username1="Vijayabaskarofl"
+        count=20
+        username2="SuVe4Madurai"
+        username3="narendramodi"
+        tweetCriteria1=got3.manager.TweetCriteria().setUsername(username1).setMaxTweets(count)
+        tweetCriteria2=got3.manager.TweetCriteria().setUsername(username2).setMaxTweets(count)
+        tweetCriteria3=got3.manager.TweetCriteria().setUsername(username3).setMaxTweets(count)
+        dict_obj_eng1=my_dictionary()
+        dict_obj_tam1=my_dictionary()
+        dict_obj_eng2=my_dictionary()
+        dict_obj_tam2=my_dictionary()
+        dict_obj_eng3=my_dictionary()
+        dict_obj_tam3=my_dictionary()
+        for i in range(count):
+            tweets1=got3.manager.TweetManager.getTweets(tweetCriteria1)[i]
+            result1=langid.classify(tweets1.text)
+            try:		
+                if(result1[0]=='en'):
+                    dict_obj_eng1.add(str(tweets1.date),tweets1.text)
+                    translated = translator.translate(tweets1.text,src='en',dest='ta')
+                    dict_obj_tam1.add(str(tweets1.date),translated.text)
+                elif(result1[0]=='ta'):
+                    dict_obj_tam1.add(str(tweets1.date),tweets1.text)
+                    translated = translator.translate(tweets1.text,src='ta',dest='en')
+                    dict_obj_eng1.add(str(tweets1.date),translated.text)
+            except:
+                continue
+        for i in range(count):
+            tweets2=got3.manager.TweetManager.getTweets(tweetCriteria2)[i]
+            result2=langid.classify(tweets2.text)
+            try:
+                if(result2[0]=='en'):
+                    dict_obj_eng2.add(str(tweets2.date),tweets2.text)
+                    translated = translator.translate(tweets2.text,src='en', dest='ta')
+                    dict_obj_tam2.add(str(tweets2.date),translated.text)
+                elif(result2[0]=='ta'):
+                    dict_obj_tam2.add(str(tweets2.date),tweets2.text)
+                    translated = translator.translate(tweets2.text,src='ta', dest='en')
+                    dict_obj_eng2.add(str(tweets2.date),translated.text)
+            except:
+                continue
+        for i in range(count):
+            tweets3=got3.manager.TweetManager.getTweets(tweetCriteria3)[i]
+            result3=langid.classify(tweets3.text)
+            try:
+                if(result3[0]=='en'):
+                    dict_obj_eng3.add(str(tweets3.date),tweets3.text)
+                    translated = translator.translate(tweets2.text,src='en', dest='ta')
+                    dict_obj_tam3.add(str(tweets3.date),translated.text)
+                elif(result3[0]=='hi'):
+                    translatedt= translator.translate(tweets3.text,src='hi', dest='ta')
+                    dict_obj_tam3.add(str(tweets3.date),translatedt.text)
+                    translated = translator.translate(tweets2.text,src='hi', dest='en')
+                    dict_obj_eng3.add(str(tweets3.date),translated.text)
+            except:
+                continue
+        return render_template('tweet.html',dict_obj_eng1=dict_obj_eng1,dict_obj_eng2=dict_obj_eng2,dict_obj_eng3=dict_obj_eng3,dict_obj_tam1=dict_obj_tam1,dict_obj_tam2=dict_obj_tam2,dict_obj_tam3=dict_obj_tam3)
+    except Exception as e:
+	    return render_template("error.html", error = str(e))
 if __name__ == "__main__":
     app.run(debug=True) 
-	
