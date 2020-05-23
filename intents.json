@@ -24,17 +24,17 @@
         },
 		{"tag": "loneliness",
          "patterns": ["Iam feeling lonely","Iam lonely","I want someone to talk"],
-         "responses": ["Everybody have their lows.Don't worry", "Iam there for you and there are people around you to love you!", "People love you!They'll come around","Iam your friend too you can't be lonely"],
+         "responses": ["Everybody have their lows.\\nDon't worry", "Iam there for you and there are people \\naround you to love you!", "People love you!They'll come around","Iam your friend too you can't be lonely"],
 		 "context_set":""
 		},
 		{"tag": "depression",
          "patterns": ["Iam depressed", "I feel depressed", "I think i have depression"],
-         "responses": ["Are you sure?I can give you the symptoms", "Time will heal you.Can you tell me how you feel?", "Connect with somebody around you.Can you be specific about your feeling","Seek out for help!I can help.Tell me how you feel."],
+         "responses": ["Are you sure?\\nI can give you the symptoms", "Time will heal you.\\nCan you tell me how you feel?", "Connect with somebody around you.\\nCan you be specific about your feeling","Seek out for help!\\nI can help.Tell me how you feel."],
 		 "context_set":""
         },
 		{"tag": "symptoms",
          "patterns": ["Anxious,sad,hatred", "I feel sad all the time", "I seem to have lost sleep","I can't sleep","Iam anxious and angry"],
-         "responses": ["Well that doesn't mean you have depression.You can check out the symptoms type Symptoms of depression", "Time will heal you.You can check out the symptoms type Symptoms of depression"],
+         "responses": ["Well that doesn't mean you have depression.\\nYou can check out the symptoms type Symptoms of depression", "Time will heal you.\\nYou can check out the symptoms type Symptoms of depression"],
 		 "context_set":""
         },
 		{"tag": "talk",
@@ -44,22 +44,22 @@
         },
 		{"tag": "query",
          "patterns": ["What can you do?", "what can do you? ", "What do you do","What's your job?"],
-         "responses": ["I can talk with you,get you to know the symptoms of depression", "I can be your friend and help you talk out", "I can listen to your thoughts and tell you about depression"],
+         "responses": ["I can talk with you,\\nget you to know the symptoms of depression", "I can be your friend and help you talk out", "I can listen to your thoughts and \\ntell you about depression"],
 		 "context_set":""
         },
 		{"tag": "depression_symptoms",
          "patterns": ["What are the symptoms of depression?", "Symptoms of depression", "Depression symptoms"],
-         "responses": ["Some of them are anxiety,sudden appetite and weight change,mood swings.For more info you can check out this link https://www.healthline.com/health/depression/recognizing-symptoms"],
+         "responses": ["Some of them are anxiety,\\nsudden appetite and weight change,mood swings\\n.For more info you can check out this link https://www.healthline.com/health/depression/recognizing-symptoms"],
 		 "context_set":""
         },
 		{"tag": "cheer_up",
          "patterns": ["Can you cheer me up?","Help me to be happy", "I want to be happy"],
-         "responses": ["Let me cheer you up.Want to hear a joke?Ask me to tell a joke"],
+         "responses": ["Let me cheer you up.\\nWant to hear a joke?Ask me to tell a joke"],
 		 "context_set":""
         },
 		{"tag": "joke",
          "patterns": ["Tell a joke","crack a joke", "I want to hear a joke","Tell me a joke"],
-         "responses": ["Me: Would you like to be the sun in my life?Her: Awww... Yes!!!Me: Good then stay 92.96 million miles away from me","Why are frogs always so happy? They eat what ever bugs them","What do you call an alligator who's a detective? An investi-gator","What lights up a soccer stadium? A soccer match","Why shouldn't you write with a broken pencil? Because...it's pointless","What's the difference between the bird flu and the swine flu? One requires tweetment and the other an oinkment."],
+         "responses": ["Me: Would you like to be the sun in my life?\\nHer: Awww... Yes!!!Me: Good then stay 92.96 million miles away from me","Why are frogs always so happy? They eat what ever bugs them","What do you call an alligator who's a detective? An investi-gator","What lights up a soccer stadium? A soccer match","Why shouldn't you write with a broken pencil? Because...it's pointless","What's the difference between the bird flu and the swine flu? One requires tweetment and the other an oinkment."],
 		 "context_set":""
         },
 		{"tag": "no_understand",
