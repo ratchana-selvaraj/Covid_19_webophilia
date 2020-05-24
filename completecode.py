@@ -19,6 +19,17 @@ from newsapi import NewsApiClient
 app = Flask(__name__)
 from translation import google,bing,ConnectError
 from googletrans import Translator
+vfnames=[]
+vlnames=[]
+vphones=[]
+vemails=[]
+vaddrs=[]
+dfnames=[]
+dlnames=[]
+dphones=[]
+demails=[]
+dmoney=[]
+val=0
 class my_dictionary(dict): 
 
     # __init__ function 
@@ -116,61 +127,47 @@ def get_bot_response():
 	    return render_template("error.html", error = str(e))
 @app.route('/')
 def Index():
-    try:
-        newsapi = NewsApiClient(api_key="b0f75ce660c0466a9a98c2478f8abb62")
-        topheadlines = newsapi.get_top_headlines(sources="the-times-of-india")
-        articles = topheadlines['articles']
-        desc = []
-        news = []
-        img = []
-        for i in range(len(articles)):
-            myarticles = articles[i]
-            news.append(myarticles['title'])
-            desc.append(myarticles['description'])
-            img.append(myarticles['urlToImage'])
-        mylist = zip(news, desc, img)
-        mdu_c=corona_dist()
-        corona_count = Corona_State()
-        fig=graph_1().to_html()
-        html_map=m._repr_html_()
-        return render_template('index.html', context = mylist,table = mdu_c,map=corona_count,pair1=pair1,pair2=pair2,fig=fig,cmap=html_map)
+	try:
+		newsapi = NewsApiClient(api_key="b0f75ce660c0466a9a98c2478f8abb62")
+		topheadlines = newsapi.get_top_headlines(sources="the-times-of-india")
+		articles = topheadlines['articles']
+		desc = []
+		news = []
+		img = []
+		for i in range(len(articles)):
+			myarticles = articles[i]
+			news.append(myarticles['title'])
+			desc.append(myarticles['description'])
+			img.append(myarticles['urlToImage'])
+		mylist = zip(news, desc, img)
+		mdu_c=corona_dist()
+		corona_count = Corona_State()
+		fig=graph_1().to_html()
+		return render_template('index.html', context = mylist,table = mdu_c,map=corona_count,pair1=pair1,pair2=pair2,fig=fig)
 	except Exception as e:
 	    return render_template("error.html", error = str(e))
 def Corona_State():
-    coronadf=pd.read_csv('https://api.covid19india.org/csv/latest/state_wise.csv')
-    coronadf.head()
-    corona_count=coronadf.groupby('State').sum()[['Delta_Confirmed','Delta_Deaths','Delta_Recovered']]
-    corona_count.head()
-    pair2=[(State,Delta_Confirmed,Delta_Deaths,Delta_Recovered) for State,Delta_Confirmed,Delta_Deaths,Delta_Recovered in zip(corona_count.index,corona_count['Delta_Confirmed'],corona_count['Delta_Deaths'],corona_count['Delta_Recovered'])]
-    return corona_count
-def corona_dist():
+	coronadf=pd.read_csv('https://api.covid19india.org/csv/latest/state_wise.csv')
+	coronadf.head()
+	corona_count=coronadf.groupby('State').sum()[['Delta_Confirmed','Delta_Deaths','Delta_Recovered']]
+	corona_count.head()
+	pair2=[(State,Delta_Confirmed,Delta_Deaths,Delta_Recovered) for State,Delta_Confirmed,Delta_Deaths,Delta_Recovered in zip(corona_count.index,corona_count['Delta_Confirmed'],corona_count['Delta_Deaths'],corona_count['Delta_Recovered'])]
+	return corona_count
+def corona_dist(): 
     corona2=pd.read_csv('https://api.covid19india.org/csv/latest/district_wise.csv')
     corona2.head()
     mdu=corona2[corona2['District'].str.contains('Madurai')]
     mdu_c=mdu.groupby('District').sum()[['Confirmed','Recovered','Active']]
     mdu_c.head()
-    return mdu_c
+    return mdu_c 
 def graph_1():
     df=pd.read_csv('https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv')
     df
     cdf=df[df['Country/Region'].str.contains('India')]
     cols=['Date','Confirmed']
     cdf1=cdf[cols]
-    cdf1
     fig=pg.bar(cdf1,x='Date',y='Confirmed',title = 'Corona confirmation all across India : Time series')
     return fig
-df=pd.read_csv('https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv')
-df= df[(df.Date.isin(['2020-05-19']))]
-m=folium.Map(location=[21.0	,78.0],tiles='Stamen toner',zoom_start= 4 )
-folium.Circle(location= [21.0	,78.0	],radius=10000, color='gold', fill=True,popup='{}Confirmed'.format(50000)).add_to(m)
-def circle_maker(x):
-    folium.Circle(location= [x[0],x[1]],
-                  radius=float(x[2]*10),
-                  color='gold',
-                  fill=True,
-                  popup='{}\nConfirmed cases: {}'.format(x[3], x[2])).add_to(m)
-df[['Lat','Long','Confirmed','Country/Region']].apply(lambda x: circle_maker(x),axis =1)
-html_map=m._repr_html_()
 fig=graph_1()
 mdu_c=corona_dist()
 pair1=[(District,Confirmed,Recovered,Active) for District,Confirmed,Recovered,Active in zip(mdu_c.index,mdu_c['Confirmed'],mdu_c['Recovered'],mdu_c['Active'])]
@@ -183,63 +180,41 @@ def public():
         return render_template("font-awesome.html")
     except Exception as e:
 	    return render_template("error.html", error = str(e))
-@app.route("/donation") 
+@app.route("/donation",methods=["GET","POST"]) 
 def donation():
-    try:
-        return render_template("basic_elements.html")
-    except Exception as e:
-	    return render_template("error.html", error = str(e))
+	try:
+		return render_template("basic_elements.html")
+	except Exception as e:
+		return render_template("error.html", error = str(e))
 @app.route("/donate",methods=["GET","POST"])
 def donate():
-    try:
-        if request.method=="POST":
-            pd=request.form
-            Amount=pd['amt']
-            payment=pd['pay']
-            fname=pd['fname']
-            lname=pd['lname']
-            Mail=pd['email']
-            phone=pd['phn']
-            db=MySQLdb.connect("localhost","root","Alohomora123","Donate")
-            cur=db.cursor()
-            cur.execute("INSERT INTO Donate(Firstname,Lastname,Email,Phone,Amount,Method) VALUES(%s,%s,%s,%s,%s,%s)",(fname,lname,Mail,phone,Amount,payment))
-            db.commit()
-            cur.close()
-            return render_template('checkout', phone=phone)
-    except Exception as e:
-	    return render_template("error.html", error = str(e))
-@app.route("/checkout/<phone>")
-def checkout(phone):
-    try:
-        db=MySQLdb.connect("localhost","root","Goodluck","pm")
-        cur=db.cursor()
-        query="select * from Donate where Phone="+phone
-        cur.execute(query)
-        m=cur.fetchone()
-        cur.close()
-        return render_template("checkout.html" ,m=m)
-    except Exception as e:
-	    return render_template("error.html", error = str(e))
+	if request.method=="POST":
+		print("Here")
+		pd=request.form
+		Amount=pd['amt']
+		payment=pd['pay']
+		fname=pd['fname']
+		lname=pd['lname']
+		Mail=pd['email']
+		phone=pd['phn']
+		dfnames.append(fname)
+		dlnames.append(lname)
+		demails.append(Mail)
+		dmoney.append(Amount)
+		dphones.append(phone)
+	return render_template('checkout.html',firstname=fname,lastname=lname,mail=Mail,phn=phone,amount=Amount,pm=payment)      
 @app.route("/Thankyou",methods=["GET","POST"])
 def thankyou():
     try:
         return render_template("volenteer.html")
     except Exception as e:
 	    return render_template("error.html", error = str(e))
-@app.route("/volenteer",methods=["GET","POST"])
-def volenteer():
+@app.route("/about",methods=["GET","POST"])
+def about():
     try:
-        if (request.method=='POST'):
-            vfname=vfnames.append(request.form['Vfname'])
-            vlname=vlnames.append(request.form['Vlname'])
-            vemail=vemails.append(request.form['email'])
-            vphone=vphones.append(request.form['Phn'])
-            vadd=vaddrs.append(request.form['addr'])
-        return render_template("volenteer.html")
+        return render_template("about.html")
     except Exception as e:
 	    return render_template("error.html", error = str(e))
-#@app.route('/volunteerdisplay',methods=['POST','GET'])
-#def volunteerdisplay():	
 @app.route("/helpdesk")
 def helpdesk():
     try:
@@ -296,12 +271,12 @@ def tweet_scrap():
             try:
                 if(result3[0]=='en'):
                     dict_obj_eng3.add(str(tweets3.date),tweets3.text)
-                    translated = translator.translate(tweets2.text,src='en', dest='ta')
+                    translated = translator.translate(tweets3.text,src='en', dest='ta')
                     dict_obj_tam3.add(str(tweets3.date),translated.text)
                 elif(result3[0]=='hi'):
                     translatedt= translator.translate(tweets3.text,src='hi', dest='ta')
                     dict_obj_tam3.add(str(tweets3.date),translatedt.text)
-                    translated = translator.translate(tweets2.text,src='hi', dest='en')
+                    translated = translator.translate(tweets3.text,src='hi', dest='en')
                     dict_obj_eng3.add(str(tweets3.date),translated.text)
             except:
                 continue
