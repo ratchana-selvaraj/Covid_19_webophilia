@@ -143,7 +143,7 @@ def Index():
 		mdu_c=corona_dist()
 		corona_count = Corona_State()
 		fig=graph_1().to_html()
-		return render_template('index.html', context = mylist,table = mdu_c,map=corona_count,pair1=pair1,pair2=pair2,fig=fig)
+		return render_template('index.html', context = mylist,table = mdu_c,map=corona_count,pair1=pair1,pair2=pair2,fig=fig,cmap=html_map)
 	except Exception as e:
 	    return render_template("error.html", error = str(e))
 def Corona_State():
@@ -168,6 +168,18 @@ def graph_1():
     cdf1=cdf[cols]
     fig=pg.bar(cdf1,x='Date',y='Confirmed',title = 'Corona confirmation all across India : Time series')
     return fig
+df=pd.read_csv('https://raw.githubusercontent.com/datasets/covid-19/master/data/time-series-19-covid-combined.csv')
+df= df[(df.Date.isin(['2020-05-19']))]
+m=folium.Map(location=[33.000000,65.000000],tiles='Stamen toner',zoom_start= 4 )
+folium.Circle(location= [33.000000,65.000000],radius=10000, color='gold', fill=True,popup='{}Confirmed'.format(5)).add_to(m)
+def circle_maker(x):
+    folium.Circle(location= [x[0],x[1]],
+                  radius=float(x[2]*10),
+                  color='gold', 
+                  fill=True,
+                  popup='{}\nConfirmed cases: {}'.format(x[3], x[2])).add_to(m)
+df[['Lat','Long','Confirmed','Country/Region']].apply(lambda x: circle_maker(x),axis =1)
+html_map=m._repr_html_()
 fig=graph_1()
 mdu_c=corona_dist()
 pair1=[(District,Confirmed,Recovered,Active) for District,Confirmed,Recovered,Active in zip(mdu_c.index,mdu_c['Confirmed'],mdu_c['Recovered'],mdu_c['Active'])]
